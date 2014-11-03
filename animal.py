@@ -11,13 +11,15 @@ class Animal:
         self.age = age  # in years, could be float
         self.name = self.set_name(name)
         self.gender = gender
-        self.weight = weight
 
         self.json_data = self.set_json_data_for_species("database.json")
         self.life_expectancy = self.json_data['life_expectancy']
         self.average_weight = self.json_data['average_weight']
-        self.weight_age_ratio = self.json_data['weight_age_ratio']
+        self.weight_age_ratio = self.json_data['age']
         self.food_weight_ratio = self.json_data['food_weight_ratio']
+        self.newborn_weight = self.json_data['newborn_weight']
+
+        self.weight = self.newborn_weight
 
     def set_name(self, name):
         if self.species not in self.SPECIES_NAMES:
@@ -40,7 +42,8 @@ class Animal:
         return json.loads(content)[self.species]
 
     def grow(self):
-        self.weight = self.weight_age_ratio * (self.age * 12)
+        if self.weight < self.average_weight:
+            self.weight = self.weight_age_ratio * (self.age * 12)
         self.age += 1/12  # increase the age with a month
 
     def eat(self):
