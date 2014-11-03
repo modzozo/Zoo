@@ -1,3 +1,6 @@
+import json
+
+
 class Animal:
 
     # "species": ['name 1', 'name 2', ...]
@@ -28,10 +31,15 @@ class Animal:
         self.weight += 0.500
         self.age += 1
 
-"""
-print(Animal.SPECIES_NAMES)
-animal1 = Animal("seagull", 3, "Poll", 'male', 1.250)
-print(Animal.SPECIES_NAMES)
-animal2 = Animal("seagull", 3, "Mark", 'male', 1.250)
-print(Animal.SPECIES_NAMES)
-"""
+    def eat(self):
+        print("Nom Nom Nom")
+        return True
+
+    def die(self):
+        file = open("database.json", "r")
+        content = file.read()
+        file.close()
+        # in database.json the age is in days, while self.age is in years
+        life_expectancy = json.loads(content)["life_expectancy"] // 356
+        chance_of_dying = self.age // life_expectancy
+        return chance_of_dying == 1
