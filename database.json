@@ -17,7 +17,7 @@
     },
     "panda": {
         "life_expectancy": 35,
-        "food_type": "bamboo",
+        "food_type": "grass",
         "gestation_period": 5,
         "newborn_weight": 25,
         "average_weight": 100,
@@ -25,7 +25,7 @@
     },
     "fox": {
         "life_expectancy": 25,
-        "food_type": "meat",
+        "food_type": "grass",
         "gestation_period": 9,
         "newborn_weight": 12,
         "average_weight": 100,
