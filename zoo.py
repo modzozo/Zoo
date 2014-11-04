@@ -54,7 +54,7 @@ class Zoo:
             elif animal2.age - animal2.last_pregnancy >= 6:
                 animal2.last_pregnancy = animal2.age
             baby = Animal(animal1.species, 0, animal1.set_name(), self.gender_baby(), None)
-            return baby
+            self.animals.accommodate(baby)
         else:
-            print "Cannot reproduce. Try again later"
+            print("Cannot reproduce. Try again later")
 
