@@ -3,19 +3,24 @@ import random
 
 class Zoo:
     def __init__(self, animals, capacity, budget):
-        self.animals = set()
+        self.animals = animals
         self.capacity = capacity
         self.budget = budget
 
 
-    def accommodate(self, new_animal):
-        self.animals.add(new_animal)
 
-    def get_income(self, num_animals):
-        self.budget += 60 * num_animals
+    def accommodate(self, new_animal):
+        if len(self.animals) < self.capacity:
+            self.animals.append(animal)
+        else:
+            print("No capacity now. Try again later")
+
+
+    def get_income(self):
+        self.budget += 60 * len(self.animals)
 
     def get_outcome(self, meat, grass):
-        meat = 0
+
         grass = 0
         for animal in self.animals:
             grass += animal.grass_eaten
@@ -24,7 +29,7 @@ class Zoo:
 
     def dead_animals(self):
         for animal in self.animals:
-            if animal.die() is True:
+            if animal.die() > 1:
                 self.animals.remove(animal)
 
     def gender_baby(self):
@@ -39,7 +44,7 @@ class Zoo:
                 animal1.last_pregnancy = animal1.age
             elif animal2.age - animal2.last_pregnancy >= 6:
                 animal2.last_pregnancy = animal2.age
-            baby = Animal(animal1.species, 0, None, self.gender_baby(), self.weight)
+            baby = Animal(animal1.species, animal1.age, animal1.set_name(), self.gender_baby(), animal1.newborn_weight)
             return baby
         else:
             return "Cannot reproduce"
