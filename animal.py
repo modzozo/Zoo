@@ -14,16 +14,22 @@ class Animal:
         self.age = age  # in months because of the requirements
         self.name = self.__set_name(name)
         self.gender = self.__set_gender(gender)
-        self.__newborn_weight = self.__json_data['newborn_weight']
+        self.newborn_weight = self.__json_data['newborn_weight']
         self.weight = self.__set_weight(weight)  # in kilos
 
-        self.__life_expectancy = self.__json_data['life_expectancy']  # in days
-        self.__average_weight = self.__json_data['average_weight']
-        self.__weight_age_ratio = self.__json_data['age']  # here key should be
+        self.life_expectancy = self.__json_data['life_expectancy']  # in days
+        self.average_weight = self.__json_data['average_weight']
+        self.weight_age_ratio = self.__json_data['age']  # here key should be
                                                          # 'weight_age_ratio'
                                                          # but in our *.json
                                                          # is only 'age'
-        self.__food_weight_ratio = self.__json_data['food_weight_ratio']
+        self.food_weight_ratio = self.__json_data['food_weight_ratio']
+
+        self.food_type = self.__json_data['food_type']  # here could be
+                                                        # made checks
+                                                        # but are missing
+                                                        # for now
+        self.gestation_period = self.__json_data['gestation_period']
 
     def __set_species(self, species):
         if self.__json_data is not None:
@@ -55,7 +61,7 @@ class Animal:
 
     def __set_weight(self, weight):
         if weight is None:
-            return self.__newborn_weight
+            return self.newborn_weight
         else:
             return weight
 
@@ -71,18 +77,18 @@ class Animal:
     # animal's weight and age; weight limit is average_weight
     def grow(self, month_time):
         self.age += month_time
-        if self.weight < self.__average_weight:
-            self.weight = min(self.__weight_age_ratio * self.age,
-                              self.__average_weight)
+        if self.weight < self.average_weight:
+            self.weight = min(self.weight_age_ratio * self.age,
+                              self.average_weight)
 
     # return how many kilos the animal should consume
     def eat(self):
-        return self.__food_weight_ratio * self.weight
+        return self.food_weight_ratio * self.weight
 
     # if chance of dying is above 1, the animal dies
     def die(self):
         # self.age is in months so roughly turn it to days
-        chance_of_dying = self.age * 30 // self.__life_expectancy
+        chance_of_dying = self.age * 30 // self.life_expectancy
         if chance_of_dying >= 1:
             self.SPECIES_NAMES[self.species].remove(self.name)  # free name for
                                                                 # further use
