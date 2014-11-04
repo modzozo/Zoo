@@ -26,11 +26,13 @@ class AnimalTests(unittest.TestCase):
                           "age": 9,
                           "food_weight_ratio": 0.2},
                          self.animal._Animal__json_data)
-        self.assertEqual(12, self.animal._Animal__life_expectancy)
-        self.assertEqual(100, self.animal._Animal__average_weight)
-        self.assertEqual(9, self.animal._Animal__weight_age_ratio)
-        self.assertEqual(0.2, self.animal._Animal__food_weight_ratio)
-        self.assertEqual(20, self.animal._Animal__newborn_weight)
+        self.assertEqual(12, self.animal.life_expectancy)
+        self.assertEqual(100, self.animal.average_weight)
+        self.assertEqual(9, self.animal.weight_age_ratio)
+        self.assertEqual(0.2, self.animal.food_weight_ratio)
+        self.assertEqual(20, self.animal.newborn_weight)
+        self.assertEqual("meat", self.animal.food_type)
+        self.assertEqual(6, self.animal.gestation_period)
 
 # Трябва ли да тествам невалидни Animal обекти,
 # ако тествам set методите за данните?
@@ -69,7 +71,7 @@ class AnimalTests(unittest.TestCase):
 
     def test_set_weight_no_passed_argument_take_newborn_weight(self):
         self.animal = Animal("bear", 14, "Poll 9", 'male')
-        self.assertEqual(self.animal._Animal__newborn_weight,
+        self.assertEqual(self.animal.newborn_weight,
                          self.animal._Animal__set_weight(None))
 
 # __set_json_data_for_species which are in database is already tested
