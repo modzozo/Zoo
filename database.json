@@ -5,7 +5,7 @@
         "gestation_period": 6,
         "newborn_weight": 10,
         "average_weight": 100,
-        "age": 9,
+        "weight_age_ratio": 9,
         "food_weight_ratio": 0.1
     },
     "bear": {
@@ -14,7 +14,7 @@
         "gestation_period": 6,
         "newborn_weight": 20,
         "average_weight": 100,
-        "age": 9,
+        "weight_age_ratio": 9,
         "food_weight_ratio": 0.2
     },
     "panda": {
@@ -23,7 +23,7 @@
         "gestation_period": 5,
         "newborn_weight": 25,
         "average_weight": 100,
-        "age": 9,
+        "weight_age_ratio": 9,
         "food_weight_ratio": 0.3
     },
     "lion": {
@@ -32,7 +32,7 @@
         "gestation_period": 9,
         "newborn_weight": 12,
         "average_weight": 100,
-        "age": 9,
+        "weight_age_ratio": 9,
         "food_weight_ratio": 0.3
     }
 }
