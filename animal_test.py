@@ -12,10 +12,10 @@ class AnimalTests(unittest.TestCase):
     def test__init(self):
         self.animal = Animal("bear", 14, "Poll 1", 'male', 10.0)
         self.assertEqual("bear", self.animal.species)
-        self.assertEqual(14, self.animal.age)
+        self.assertEqual(14, self.animal.age_in_months)
         self.assertEqual("Poll 1", self.animal.name)
         self.assertEqual('male', self.animal.gender)
-        self.assertEqual(10.0, self.animal.weight)
+        self.assertEqual(10.0, self.animal.kilos_weight)
         self.assertEqual({"bear": ["Poll 1"]}, self.animal.SPECIES_NAMES)
 
         self.assertEqual({"life_expectancy": 12,
@@ -23,16 +23,9 @@ class AnimalTests(unittest.TestCase):
                           "gestation_period": 6,
                           "newborn_weight": 20,
                           "average_weight": 100,
-                          "age": 9,
+                          "weight_age_ratio": 9,
                           "food_weight_ratio": 0.2},
-                         self.animal._Animal__json_data)
-        self.assertEqual(12, self.animal.life_expectancy)
-        self.assertEqual(100, self.animal.average_weight)
-        self.assertEqual(9, self.animal.weight_age_ratio)
-        self.assertEqual(0.2, self.animal.food_weight_ratio)
-        self.assertEqual(20, self.animal.newborn_weight)
-        self.assertEqual("meat", self.animal.food_type)
-        self.assertEqual(6, self.animal.gestation_period)
+                         self.animal.json_species_data)
 
 # Трябва ли да тествам невалидни Animal обекти,
 # ако тествам set методите за данните?
@@ -43,7 +36,7 @@ class AnimalTests(unittest.TestCase):
 
     def test_set_species_no_such_species_in_database_value_error(self):
         self.animal = Animal("bear", 14, "Poll 3", 'male', 10.0)
-        self.animal._Animal__json_data = None
+        self.animal.json_species_data = None
         with self.assertRaises(ValueError):
             self.animal._Animal__set_species("seagull")
 
@@ -67,30 +60,32 @@ class AnimalTests(unittest.TestCase):
 
     def test_set_weight_passed_argument(self):
         self.animal = Animal("bear", 14, "Poll 8", 'male', 10.0)
-        self.assertEqual(42, self.animal._Animal__set_weight(42))
+        self.assertEqual(42, self.animal._Animal__set_kilos_weight(42))
 
     def test_set_weight_no_passed_argument_take_newborn_weight(self):
-        self.animal = Animal("bear", 14, "Poll 9", 'male')
-        self.assertEqual(self.animal.newborn_weight,
-                         self.animal._Animal__set_weight(None))
+        self.animal = Animal("bear", 14, "Poll 9", 'male', 2)
+        self.assertEqual(self.animal.json_species_data['newborn_weight'],
+                         self.animal._Animal__set_kilos_weight(None))
 
 # __set_json_data_for_species which are in database is already tested
 
-    def test_set_json_data_for_species_not_in_database(self):
+    def test_set_json_species_data_species_not_in_database(self):
         self.animal = Animal("bear", 14, "Poll 10", 'male', 10.0)
-        self.assertEqual(None, self.animal._Animal__set_json_data_for_species(
+        self.assertEqual(None, self.animal._Animal__set_json_species_data(
             "database.json", "seagull"))
 
     def test_grow(self):
         self.animal = Animal("bear", 3, "Poll 11", 'male', 10.0)
         self.animal.grow(3)
-        self.assertEqual(54, self.animal.weight)
-        self.assertEqual(6, self.animal.age)
+        self.assertEqual(54, self.animal.kilos_weight)
+        self.assertEqual(6, self.animal.age_in_months)
+        # missing tests for pregnancy and the new functions
+        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     def test_grow_average_weight_reached(self):
         self.animal = Animal("bear", 3, "Poll 12", 'male', 10.0)
         self.animal.grow(10)
-        self.assertEqual(100, self.animal.weight)
+        self.assertEqual(100, self.animal.kilos_weight)
 
     def test_eat(self):
         self.animal = Animal("bear", 3, "Poll 13", 'male', 10.0)

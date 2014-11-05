@@ -5,7 +5,7 @@ from animal import Animal
 class ZooGarden:
 
     def __init__(self):
-        self.zoo = Zoo([], 50, 10000)
+        self.zoo = Zoo(50, 10000)
 
     def see_animals(self):
         if len(self.zoo.animals) != 0:
@@ -16,26 +16,20 @@ class ZooGarden:
 
     def accomodate(self, species, name, age, weight):
         gender = input("What gender is the animal?: ")
-        self.zoo.accommodate(Animal(species, age, name, gender, weight))
+        self.zoo.accommodate(species, age, name, gender, weight)
 
     def move_to_habitat(self, species, name):
-        self.zoo.animals.remove(self.find_animal_object(species, name))
-
-    def find_animal_object(self, species, name):
         for animal in self.zoo.animals:
             if animal.species == species and animal.name == name:
-                return animal
-        print("There is no such animal in the Zoo.")
+                self.zoo.animals.remove(animal)
+                Animal.SPECIES_NAMES[animal.species].remove(animal.name)
 
     def simulate(self, interval_of_time, period):
         if len(self.zoo.animals) != 0:
             time_in_months = self.time_in_months(interval_of_time, period)
             self.grow_all_animals(time_in_months)
-            self.see_animals()  # to print them after growing
+            self.see_animals()
 
-            # Zoo.dead_animals should also return a list of the dead animals
-            # because here we need to print themand
-            # Animal.die() returns True/False
             self.print_dead_animals(self.zoo.dead_animals())
 
             self.could_budget_afford_food(time_in_months)
@@ -69,18 +63,8 @@ class ZooGarden:
             print("No animals have died.")
 
     def could_budget_afford_food(self, time_in_months):
-        current_budget = self.zoo.budget
-        self.zoo.get_budget()
-        # we need the income for the simulated time in days
-        income = (self.zoo.budget - current_budget) * time_in_months * 30
-        # rough approximation
-        self.zoo.budget = current_budget + income
+        self.zoo.budget += self.zoo.get_income() * time_in_months * 30
 
-        # I'm not sure how get_outcome works
-        # I think it should check for every animal
-        # does it carnivore or herbivore
-        # to now how to multiply Animal.eat() which return consumed food kilo
-        # and sum the result to return budget loss for all animals
         self.zoo.get_outcome()
 
         if self.zoo.budget >= 0:
@@ -89,7 +73,8 @@ class ZooGarden:
             print("There aren't enough money to feed all animals."
                   "Move some to habitat?")
 
-    def born_animals(self):
+    def born_animals(self, time_in_months):
+
         # need discussion:)
         pass
 
