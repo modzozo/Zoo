@@ -13,12 +13,13 @@ class Zoo:
 
 
 
-    def accommodate(self, animal):
-        for animal in self.animals:
-            if len(self.animals) < self.capacity:
-                self.animals.append(animal)
+    def accommodate(self, species, age, name, gender, weight):
+        if len(self.animals) < self.capacity:
+            self.new_animal = Animal(species, age, name, gender, weight)
+            self.animals.append(self.new_animal)
         else:
-            print("No capacity now. Try again later")
+            message ="No capacity now. Try again later"
+            raise ValueError(message)
 
 
     def get_income(self):
@@ -27,7 +28,7 @@ class Zoo:
     def get_outcome(self):
         outcome = 0
         for animal in self.animals:
-            if animal.food_type == "meat":
+            if animal.json_species_data.food_type == "meat":
                 outcome += animal.eat() * Zoo.MEAT_1KG_PRICE
             else:
                 outcome += animal.eat() * Zoo.GRASS_1KG_PRICE
@@ -36,11 +37,13 @@ class Zoo:
         return self.budget
 
     def dead_animals(self):
-
+        list_dead_aniamals = []
         for animal in self.animals:
-            if animal.die() > 1:
+            if animal.die():
                 self.animals.remove(animal)
-        return self.animals
+                list_dead_animals.append(animal)
+        return list_dead_animals
+
 
 
     def gender_baby(self):
@@ -49,14 +52,20 @@ class Zoo:
             return "male"
         return "female"
         #TODO
-    def reproduce(self, animal1, animal2):
-        if animal1.species == animal2.species and animal1.gender != animal2.gender:
+
+    def newborn_baby(self):
+        pass
+
+    def reproduce(self):
+        for animal in self.animals:
+            if animal.gender="female" and animal1.gender != animal2.gender:
             if animal1.gender == "female" and animal1.age - animal1.last_pregnancy >= 6:
                 animal1.last_pregnancy = animal1.age
             elif animal2.age - animal2.last_pregnancy >= 6:
                 animal2.last_pregnancy = animal2.age
             baby = Animal(animal1.species, 0, animal1.set_name(), self.gender_baby(), None)
-            self.animals.accommodate(baby)
+            self.animals.append(baby)
         else:
-            print("Cannot reproduce. Try again later")
+            message = "Cannot reproduce. Try again later"
+            raise ValueError(message)
 
