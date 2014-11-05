@@ -32,7 +32,7 @@ class Zoo:
     def get_outcome(self):
         outcome = 0
         for animal in self.animals:
-            if animal.json_species_data.food_type == "meat":
+            if animal.json_species_data['food_type'] == "meat":
                 outcome += animal.eat() * Zoo.MEAT_1KG_PRICE
             else:
                 outcome += animal.eat() * Zoo.GRASS_1KG_PRICE
