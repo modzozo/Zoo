@@ -7,16 +7,16 @@ class Zoo:
     GRASS_1KG_PRICE = 2
 
     def __init__(self, capacity, budget):
-        self.animals = {}
+        self.animals = []
         self.capacity = capacity
         self.budget = budget
 
 
 
-    def accommodate(self, species, age, name, gender, weight):
-        if len(self.animals) < self.capacity:
-            self.new_animal = Animal(species, age, name, gender, weight)
-            self.animals.append(self.new_animal)
+    def accommodate(self, animal):
+        for animal in self.animals:
+            if len(self.animals) < self.capacity:
+                self.animals.append(animal)
         else:
             print("No capacity now. Try again later")
 
@@ -40,6 +40,8 @@ class Zoo:
         for animal in self.animals:
             if animal.die() > 1:
                 self.animals.remove(animal)
+        return self.animals
+
 
     def gender_baby(self):
         random_number = random.random()
